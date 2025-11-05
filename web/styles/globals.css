@@ -1,0 +1,51 @@
+:root,
+[data-theme='default'] {
+  color-scheme: light;
+  --color-bg: 245 247 250;
+  --color-surface: 255 255 255;
+  --color-text: 11 16 32;
+  --color-subtext: 73 80 99;
+  --color-border: 182 191 209;
+  --color-cta: 0 191 166;
+  --color-highlight: 76 201 240;
+  --color-support: 255 190 11;
+  --color-support-accent: 241 91 181;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --color-bg: 11 16 32;
+  --color-surface: 27 36 59;
+  --color-text: 245 247 250;
+  --color-subtext: 196 203 218;
+  --color-border: 76 91 120;
+  --color-cta: 0 191 166;
+  --color-highlight: 76 201 240;
+  --color-support: 255 190 11;
+  --color-support-accent: 241 91 181;
+}
+
+[data-theme='vibrant'] {
+  color-scheme: light;
+  --color-bg: 245 247 250;
+  --color-surface: 255 255 255;
+  --color-text: 11 16 32;
+  --color-subtext: 65 70 90;
+  --color-border: 170 188 215;
+  --color-cta: 0 210 182;
+  --color-highlight: 56 190 255;
+  --color-support: 255 200 40;
+  --color-support-accent: 255 105 200;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: rgb(var(--color-bg));
+  color: rgb(var(--color-text));
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+code {
+  font-family: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+}

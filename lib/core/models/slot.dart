@@ -1,29 +1,30 @@
-class Slot {
-  Slot({
+import 'package:equatable/equatable.dart';
+
+class Slot extends Equatable {
+  const Slot({
     required this.id,
     required this.businessId,
-    required this.categoryId,
+    required this.service,
     required this.startsAt,
-    required this.endsAt,
-    required this.discountPercent,
+    required this.durationMinutes,
     required this.originalPrice,
-    required this.seatsRemaining,
-    required this.cancelPolicy,
-    required this.createdAt,
+    required this.discountPercent,
+    required this.notes,
   });
 
   final String id;
   final String businessId;
-  final String categoryId;
+  final String service;
   final DateTime startsAt;
-  final DateTime endsAt;
-  final int discountPercent;
+  final int durationMinutes;
   final double originalPrice;
-  final int seatsRemaining;
-  final String cancelPolicy;
-  final DateTime createdAt;
+  final int discountPercent;
+  final String notes;
 
-  double get discountedPrice => originalPrice * (1 - discountPercent / 100);
+  double get finalPrice => originalPrice * (1 - discountPercent / 100);
 
-  Duration get startsIn => startsAt.difference(DateTime.now());
+  DateTime get endsAt => startsAt.add(Duration(minutes: durationMinutes));
+
+  @override
+  List<Object?> get props => [id, businessId, service, startsAt, durationMinutes, originalPrice, discountPercent, notes];
 }
