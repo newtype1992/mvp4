@@ -1,29 +1,24 @@
-class Business {
-  Business({
+import 'package:equatable/equatable.dart';
+
+class Business extends Equatable {
+  const Business({
     required this.id,
     required this.name,
-    required this.tagline,
+    required this.category,
     required this.address,
-    required this.city,
-    required this.latitude,
-    required this.longitude,
-    required this.rating,
-    required this.reviewCount,
-    required this.categories,
-    required this.heroImage,
     required this.distanceMiles,
+    required this.rating,
+    required this.heroImage,
   });
 
   final String id;
   final String name;
-  final String tagline;
+  final String category;
   final String address;
-  final String city;
-  final double latitude;
-  final double longitude;
-  final double rating;
-  final int reviewCount;
-  final List<String> categories;
-  final String heroImage;
   final double distanceMiles;
+  final double rating;
+  final String heroImage;
+
+  @override
+  List<Object?> get props => [id, name, category, address, distanceMiles, rating, heroImage];
 }

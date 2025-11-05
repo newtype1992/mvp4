@@ -1,82 +1,56 @@
-# Swift Slots
+# Swift Slots MVP
 
-Swift Slots is a Flutter multi-platform experience that showcases how customers can instantly book discounted last-minute openings from gyms, salons, and clinics nearby. The app ships with mock data, deterministic generators, and a complete user journey from onboarding to confirmation.
+Swift Slots is a cross-platform Flutter demo that lets people discover and claim last-minute discounted appointments from nearby service businesses. The project focuses on showcasing the core marketplace loop so product, sales, and research teams can validate the concept quickly.
+
+## Core Experience
+- **Feed of openings:** The home screen lists real-time eligible slots with business name, service, discount, time, and distance.
+- **Slot details:** Tapping a card reveals richer business context, pricing, and a prominent “Book now” action.
+- **Lightweight booking flow:** A confirmation screen summarizes the reservation before routing to a success state.
+- **Demo mode:** A toggle on the feed swaps the seeded data for freshly generated slots to simulate an always-on marketplace. Saved slots persist while you explore.
+
+## Project Structure
+```
+lib/
+  core/
+    data/mock_data.dart      # Seeded businesses and slots plus demo generators
+    models/                  # Business & Slot value types (Equatable)
+    services/slot_service.dart
+  state/slot_providers.dart  # Riverpod providers + controllers for feed & saved slots
+  ui/
+    screens/                 # Home, Slot Detail, Confirm Booking, Confirmation
+    theme/                   # Tailwind-inspired theme built on the product palette
+```
+
+The app uses `flutter_riverpod` for simple state management, `go_router` for navigation, and Material 3 theming tuned to the Swift Slots palette:
+
+- CTA: `#00BFA6`
+- Highlight: `#4CC9F0`
+- Support: `#FFBE0B`, `#F15BB5`
+- Neutrals: `#0B1020`, `#F5F7FA`
 
 ## Getting Started
+1. Install [Flutter 3.19+](https://docs.flutter.dev/get-started/install) with the accompanying Dart SDK.
+2. Fetch packages:
+   ```bash
+   flutter pub get
+   ```
+3. Run on your preferred platform:
+   ```bash
+   flutter run -d chrome       # Web
+   flutter run -d ios          # iOS
+   flutter run -d android      # Android
+   ```
 
-### Prerequisites
-- Flutter stable (3.19 or newer) with Dart SDK 3.3+
-- Xcode / Android Studio or command-line tools for target platforms
+## Demo Walkthrough
+1. Launch the app to browse seeded openings from gyms, salons, physiotherapists, and dentists in Austin, TX.
+2. Toggle **Demo mode** to reshuffle the marketplace feed with randomly generated slots that respect each business’s category.
+3. Save interesting offers with the bookmark icon, then tap any card to inspect the full details.
+4. Continue to **Confirm booking** to review the date, time, duration, and pricing before finalizing.
+5. Finish on the confirmation screen and jump back to the feed to keep exploring.
 
-### Setup
+## Landing Page Preview
+The repository still includes a zero-dependency Tailwind CDN demo under `web/` that mirrors the in-app palette for marketing previews. Serve it locally with:
 ```bash
-flutter pub get
+python3 -m http.server --directory web 4173
 ```
-
-### Run
-Web (Chrome):
-```bash
-flutter run -d chrome
-```
-
-iOS (physical or simulator):
-```bash
-flutter run -d <device_id>
-```
-
-Android:
-```bash
-flutter run -d android
-```
-
-### Test Plan Walkthrough
-1. Complete onboarding by selecting interests, granting mock location, and opting into notifications.
-2. Use the feed filters to narrow results, then switch to the map tab and inspect clustered pins.
-3. Open a slot, review business details, and start booking.
-4. Apply optional promo code, simulate payment, and observe confirmation with QR code placeholder.
-5. Add to calendar (stub), share booking, and explore watchlist/favorites.
-6. Toggle Demo Mode to reseed interests and location for rapid demos.
-7. Visit the debug panel to spawn cancellations and trigger a notification preview.
-
-### Demo Mode
-Use the `Demo Mode` toggle in profile settings to auto-enable interests, watch popular categories, and simulate fresh cancellations for live demos.
-
-## Notes
-- All services run in-memory with deterministic seeding.
-- Local notifications are simulated via `flutter_local_notifications`; no external keys are required.
-- Maps leverage OpenStreetMap via `flutter_map` with mock coordinates in Austin, TX.
-
-## Tailwind CSS landing page
-Swift Slots now ships with a Tailwind-powered marketing landing page for quick web previews of the product story.
-
-### Setup
-- The landing page lives in `web/index.html` and uses the [Tailwind CSS CDN build](https://cdn.tailwindcss.com) for zero-config bundling.
-- Custom theme tokens (colors, shadows, and font stacks) are declared via the in-page `tailwind.config` override so Flutter builds can reuse the same HTML shell.
-- Google Fonts (`Poppins` for display, `Inter` for supporting copy) are preloaded for typographic consistency.
-
-To view the landing experience locally run a Flutter web build (or serve the HTML directly):
-
-```bash
-flutter run -d chrome
-# or
-python -m http.server --directory web 8080
-```
-
-### Color palette
-The Tailwind configuration exposes the following brand palette inspired by the design references:
-
-| Token      | Hex     | Usage                                      |
-|------------|---------|---------------------------------------------|
-| `primary`  | `#FF6B6B` | Primary actions, gradient starting hue       |
-| `secondary`| `#FF9472` | Gradient blend, highlight surfaces           |
-| `accent`   | `#22D3EE` | Informational pills, accent buttons          |
-| `success`  | `#22C55E` | Live indicators and discount badges          |
-| `warning`  | `#F59E0B` | Ratings, emphasis strokes                   |
-| `neutral`  | `#1E293B` (900) | Primary text, structural contrast           |
-| `background` | `#F6F8FC` | Page background, subtle contrast backdrop    |
-| `surface`  | `#FFFFFF` | Card backgrounds, elevated containers        |
-
-### Accessibility and responsiveness
-- Utility classes apply high-contrast text (`text-neutral-900`) on light surfaces and ensure gradient sections include white overlays for readability.
-- Interactive controls use `focus-visible` rings to ensure keyboard users receive visible cues.
-- Layouts switch between stacked and multi-column grids via Tailwind responsive breakpoints, keeping the page legible on mobile, tablet, and desktop.
+Then open [http://localhost:4173](http://localhost:4173) in your browser.

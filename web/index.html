@@ -1,526 +1,165 @@
-<!DOCTYPE html>
-<html lang="en" class="h-full">
+<!doctype html>
+<html lang="en" data-theme="default">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Swift Slots – Last-Minute Local Deals</title>
-    <meta
-      name="description"
-      content="Swift Slots helps you grab discounted last-minute appointments from local gyms, salons, and spas before they're gone."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Semantic Tailwind Theming Demo</title>
+    <link rel="stylesheet" href="./styles/globals.css" />
     <script>
+      tailwind = window.tailwind || {};
       tailwind.config = {
-        darkMode: 'class',
         theme: {
           extend: {
             colors: {
-              primary: '#FF6B6B',
-              secondary: '#FF9472',
-              accent: '#22D3EE',
-              success: '#22C55E',
-              warning: '#F59E0B',
-              neutral: {
-                50: '#F8FAFD',
-                100: '#EEF2F8',
-                200: '#E2E8F0',
-                500: '#64748B',
-                700: '#334155',
-                900: '#1E293B'
-              },
-              background: '#F6F8FC',
-              surface: '#FFFFFF',
-              text: '#1E293B'
-            },
-            fontFamily: {
-              display: ['Poppins', 'ui-sans-serif', 'system-ui'],
-              sans: ['Inter', 'ui-sans-serif', 'system-ui']
+              bg: 'rgb(var(--color-bg) / <alpha-value>)',
+              surface: 'rgb(var(--color-surface) / <alpha-value>)',
+              text: 'rgb(var(--color-text) / <alpha-value>)',
+              subtext: 'rgb(var(--color-subtext) / <alpha-value>)',
+              border: 'rgb(var(--color-border) / <alpha-value>)',
+              cta: 'rgb(var(--color-cta) / <alpha-value>)',
+              highlight: 'rgb(var(--color-highlight) / <alpha-value>)',
+              support: 'rgb(var(--color-support) / <alpha-value>)',
+              supportAccent: 'rgb(var(--color-support-accent) / <alpha-value>)',
             },
             boxShadow: {
-              elevated: '0px 30px 60px -40px rgba(15, 23, 42, 0.45)',
-              card: '0px 20px 45px -20px rgba(15, 23, 42, 0.35)'
-            }
-          }
-        }
+              focus: '0 0 0 3px rgb(var(--color-highlight) / 0.35)',
+            },
+          },
+        },
       };
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="min-h-full bg-background font-sans text-text antialiased">
-    <div class="relative overflow-hidden">
-      <div class="absolute inset-x-0 -top-40 -z-10 flex justify-center blur-3xl">
-        <div class="h-80 w-[40rem] rounded-full bg-gradient-to-r from-primary via-secondary to-warning opacity-60"></div>
-      </div>
-      <header class="relative">
-        <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
-          <a href="#" class="flex items-center gap-3 text-lg font-semibold text-neutral-900">
-            <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-white shadow-card">
-              SS
+  <body class="min-h-screen bg-bg text-text antialiased transition-colors duration-300 ease-in-out">
+    <main class="mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center gap-12 px-6 py-16">
+      <header class="flex flex-col items-center gap-6 text-center">
+        <span class="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-4 py-1 text-sm font-medium text-subtext shadow-sm">
+          <span class="h-2.5 w-2.5 rounded-full bg-highlight" aria-hidden="true"></span>
+          <span class="uppercase tracking-wide">Current theme</span>
+          <span id="theme-name" class="font-semibold text-text">default</span>
+        </span>
+        <div class="space-y-4">
+          <h1 class="text-4xl font-bold sm:text-5xl">Build once, theme everywhere.</h1>
+          <p class="mx-auto max-w-2xl text-lg text-subtext sm:text-xl">
+            Semantic Tailwind tokens map utility classes to CSS variables so you can drop in fresh palettes by only updating the RGB tuples in
+            <code class="rounded bg-surface/70 px-1 py-0.5">styles/globals.css</code>.
+          </p>
+        </div>
+        <button
+          id="cycle-theme"
+          type="button"
+          class="rounded-lg border border-transparent bg-cta px-5 py-2 text-base font-semibold text-bg shadow-sm transition hover:bg-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-highlight"
+        >
+          Switch theme
+        </button>
+        <div class="flex flex-wrap items-center justify-center gap-3 text-sm text-subtext">
+          <template id="theme-pill-template">
+            <span class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 transition" data-theme-pill>
+              <span class="h-3 w-3 rounded-full" aria-hidden="true"></span>
+              <span data-theme-label></span>
             </span>
-            <span class="font-display text-2xl font-semibold">Swift Slots</span>
-          </a>
-          <div class="hidden items-center gap-10 text-sm font-medium text-neutral-700 lg:flex">
-            <a href="#deals" class="transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Browse Deals</a>
-            <a href="#features" class="transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">How it Works</a>
-            <a href="#business" class="transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">For Businesses</a>
-          </div>
-          <div class="hidden items-center gap-3 lg:flex">
-            <a
-              href="#"
-              class="rounded-full border border-neutral-200 px-5 py-2 text-sm font-semibold text-neutral-700 shadow-sm transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            >
-              Log in
-            </a>
-            <a
-              href="#get-started"
-              class="rounded-full bg-gradient-to-r from-primary via-secondary to-warning px-6 py-2 text-sm font-semibold text-white shadow-card transition hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              Get Started
-            </a>
-          </div>
-          <button
-            type="button"
-            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-700 transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary lg:hidden"
-            aria-label="Open navigation"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </nav>
+          </template>
+          <div id="theme-pills" class="flex flex-wrap items-center justify-center gap-3"></div>
+        </div>
       </header>
 
-      <main class="relative">
-        <section id="hero" class="mx-auto max-w-7xl px-6 pb-20 pt-6 lg:px-10 lg:pt-16">
-          <div class="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div class="space-y-8">
-              <div class="inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 text-sm font-semibold text-primary shadow-sm">
-                <span class="h-2 w-2 rounded-full bg-success"></span>
-                <span>Live deals dropping every hour</span>
-              </div>
-              <div class="space-y-5">
-                <h1 class="font-display text-4xl font-semibold leading-tight text-neutral-900 sm:text-5xl lg:text-6xl">
-                  Last-Minute Deals on Local Services
-                </h1>
-                <p class="text-lg text-neutral-600 lg:text-xl">
-                  Grab up to <span class="font-semibold text-primary">70% off</span> fitness classes, spa treatments, and salon appointments in your neighborhood.
-                  When businesses have last-minute openings, you get instant savings.
-                </p>
-              </div>
-              <div class="flex flex-col gap-4 sm:flex-row">
-                <a
-                  href="#deals"
-                  class="inline-flex items-center justify-center gap-2 rounded-full bg-neutral-900 px-8 py-3 text-sm font-semibold text-white transition hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
-                >
-                  <span>Browse Deals</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                      fill-rule="evenodd"
-                      d="M10.293 3.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 10H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </a>
-                <a
-                  href="#business"
-                  class="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-200 bg-white px-8 py-3 text-sm font-semibold text-neutral-700 shadow-sm transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                >
-                  List Your Business
-                </a>
-              </div>
-              <dl class="grid gap-6 sm:grid-cols-3">
-                <div class="rounded-2xl bg-white/90 p-5 shadow-card">
-                  <dt class="text-xs uppercase tracking-wider text-neutral-500">Active slots</dt>
-                  <dd class="mt-1 font-display text-2xl font-semibold text-neutral-900">2,500+</dd>
-                </div>
-                <div class="rounded-2xl bg-white/90 p-5 shadow-card">
-                  <dt class="text-xs uppercase tracking-wider text-neutral-500">Partner venues</dt>
-                  <dd class="mt-1 font-display text-2xl font-semibold text-neutral-900">500+</dd>
-                </div>
-                <div class="rounded-2xl bg-white/90 p-5 shadow-card">
-                  <dt class="text-xs uppercase tracking-wider text-neutral-500">Happy members</dt>
-                  <dd class="mt-1 font-display text-2xl font-semibold text-neutral-900">50K+</dd>
-                </div>
-              </dl>
-            </div>
-            <div class="relative">
-              <div class="absolute inset-0 -top-6 -z-10 scale-105 rounded-[2.5rem] bg-gradient-to-br from-primary via-secondary to-warning opacity-80 blur-3xl"></div>
-              <div class="rounded-[2.5rem] bg-white p-6 shadow-elevated">
-                <div class="flex items-center justify-between rounded-3xl bg-neutral-900 px-6 py-4 text-white">
-                  <div>
-                    <p class="text-sm text-neutral-200">Available Right Now</p>
-                    <p class="text-lg font-semibold">Book these slots before they're gone</p>
-                  </div>
-                  <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium">
-                    <span class="h-2 w-2 rounded-full bg-success"></span>
-                    Live updates
-                  </span>
-                </div>
-                <div class="mt-6 grid gap-4">
-                  <article class="flex gap-4 rounded-2xl border border-neutral-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-card">
-                    <img src="https://images.unsplash.com/photo-1556817411-31ae72fa3ea0?auto=format&fit=crop&w=320&q=80" alt="Yoga class" class="h-28 w-28 rounded-2xl object-cover" />
-                    <div class="flex flex-1 flex-col justify-between">
-                      <div class="flex items-start justify-between gap-3">
-                        <div>
-                          <h3 class="font-semibold text-neutral-900">Pure Yoga Studio</h3>
-                          <p class="text-sm text-neutral-500">Vinyasa Flow • Downtown, 0.3 mi</p>
-                        </div>
-                        <span class="rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">50% OFF</span>
-                      </div>
-                      <div class="flex items-center justify-between text-sm text-neutral-500">
-                        <span>Starts in 1h 12m</span>
-                        <div class="flex items-center gap-1 text-warning">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                            />
-                          </svg>
-                          4.8
-                        </div>
-                      </div>
-                      <div class="flex items-center justify-between">
-                        <div class="text-sm font-semibold text-neutral-900">
-                          <span class="text-xl">$14</span>
-                          <span class="ml-1 text-xs font-medium text-neutral-400">(save $14)</span>
-                        </div>
-                        <a
-                          href="#book"
-                          class="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                        >
-                          Book Now
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="flex gap-4 rounded-2xl border border-neutral-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-card">
-                    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=320&q=80" alt="Hair salon" class="h-28 w-28 rounded-2xl object-cover" />
-                    <div class="flex flex-1 flex-col justify-between">
-                      <div class="flex items-start justify-between gap-3">
-                        <div>
-                          <h3 class="font-semibold text-neutral-900">The Cut Above Salon</h3>
-                          <p class="text-sm text-neutral-500">Signature Blowout • Midtown, 1.2 mi</p>
-                        </div>
-                        <span class="rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">45% OFF</span>
-                      </div>
-                      <div class="flex items-center justify-between text-sm text-neutral-500">
-                        <span>Starts in 42m</span>
-                        <div class="flex items-center gap-1 text-warning">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                          </svg>
-                          4.7
-                        </div>
-                      </div>
-                      <div class="flex items-center justify-between">
-                        <div class="text-sm font-semibold text-neutral-900">
-                          <span class="text-xl">$32</span>
-                          <span class="ml-1 text-xs font-medium text-neutral-400">(save $26)</span>
-                        </div>
-                        <a
-                          href="#book"
-                          class="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                        >
-                          Book Now
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="flex gap-4 rounded-2xl border border-neutral-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-card">
-                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=320&q=80" alt="Spa setup" class="h-28 w-28 rounded-2xl object-cover" />
-                    <div class="flex flex-1 flex-col justify-between">
-                      <div class="flex items-start justify-between gap-3">
-                        <div>
-                          <h3 class="font-semibold text-neutral-900">Serenity Spa</h3>
-                          <p class="text-sm text-neutral-500">60m Deep Tissue Massage • Westside, 2.1 mi</p>
-                        </div>
-                        <span class="rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">55% OFF</span>
-                      </div>
-                      <div class="flex items-center justify-between text-sm text-neutral-500">
-                        <span>Starts in 3h 5m</span>
-                        <div class="flex items-center gap-1 text-warning">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                          </svg>
-                          4.9
-                        </div>
-                      </div>
-                      <div class="flex items-center justify-between">
-                        <div class="text-sm font-semibold text-neutral-900">
-                          <span class="text-xl">$60</span>
-                          <span class="ml-1 text-xs font-medium text-neutral-400">(save $74)</span>
-                        </div>
-                        <a
-                          href="#book"
-                          class="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                        >
-                          Book Now
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                  <article class="flex gap-4 rounded-2xl border border-neutral-100 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-card">
-                    <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=320&q=80" alt="Gym class" class="h-28 w-28 rounded-2xl object-cover" />
-                    <div class="flex flex-1 flex-col justify-between">
-                      <div class="flex items-start justify-between gap-3">
-                        <div>
-                          <h3 class="font-semibold text-neutral-900">CrossFit Central</h3>
-                          <p class="text-sm text-neutral-500">HIIT Training Session • East End, 1.6 mi</p>
-                        </div>
-                        <span class="rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">60% OFF</span>
-                      </div>
-                      <div class="flex items-center justify-between text-sm text-neutral-500">
-                        <span>Starts in 2h 15m</span>
-                        <div class="flex items-center gap-1 text-warning">
-                          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                          </svg>
-                          4.6
-                        </div>
-                      </div>
-                      <div class="flex items-center justify-between">
-                        <div class="text-sm font-semibold text-neutral-900">
-                          <span class="text-xl">$18</span>
-                          <span class="ml-1 text-xs font-medium text-neutral-400">(save $22)</span>
-                        </div>
-                        <a
-                          href="#book"
-                          class="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-white transition hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                        >
-                          Book Now
-                        </a>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      <section class="grid w-full gap-6 md:grid-cols-3">
+        <article class="flex h-full flex-col gap-4 rounded-2xl border border-border bg-surface p-6 shadow-sm">
+          <h2 class="text-xl font-semibold">CTA Example</h2>
+          <p class="text-subtext">
+            CTA buttons reuse <code class="rounded bg-surface/70 px-1 py-0.5">bg-cta</code> and <code class="rounded bg-surface/70 px-1 py-0.5">text-bg</code> utilities to stay legible in every theme.
+          </p>
+          <button type="button" class="mt-auto rounded-lg bg-cta px-4 py-2 font-semibold text-bg shadow-sm transition hover:bg-highlight focus-visible:shadow-focus">
+            Get started
+          </button>
+        </article>
 
-        <section id="features" class="bg-surface/90 py-20">
-          <div class="mx-auto max-w-7xl px-6 lg:px-10">
-            <div class="mx-auto max-w-3xl text-center">
-              <span class="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2 text-sm font-semibold text-accent">
-                <span class="h-2 w-2 rounded-full bg-accent"></span>
-                Why Swift Slots works for everyone
-              </span>
-              <h2 class="mt-6 font-display text-3xl font-semibold text-neutral-900 sm:text-4xl">A smarter way to fill last-minute openings</h2>
-              <p class="mt-4 text-lg text-neutral-600">
-                Businesses get booked. Customers get discounts. Everyone wins when empty slots become exclusive deals.
-              </p>
-            </div>
-            <div class="mt-12 grid gap-6 lg:grid-cols-3">
-              <article class="flex flex-col gap-4 rounded-3xl bg-white p-8 shadow-card">
-                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h12A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5M9 3.75v16.5" />
-                  </svg>
-                </div>
-                <h3 class="font-display text-xl font-semibold text-neutral-900">Personalized discovery</h3>
-                <p class="text-sm text-neutral-500">
-                  Follow your interests and location preferences to surface the freshest last-minute openings near you.
-                </p>
-              </article>
-              <article class="flex flex-col gap-4 rounded-3xl bg-white p-8 shadow-card">
-                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836a1.125 1.125 0 011.3 0l7.875 5.25c.61.406.61 1.312 0 1.718l-7.875 5.25a1.125 1.125 0 01-1.3 0l-7.875-5.25a1.125 1.125 0 010-1.718l7.875-5.25z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5l7.875 5.25L20.25 10.5" />
-                  </svg>
-                </div>
-                <h3 class="font-display text-xl font-semibold text-neutral-900">Instant confirmation</h3>
-                <p class="text-sm text-neutral-500">
-                  Secure a discounted slot in seconds and receive confirmation, reminders, and add-to-calendar prompts instantly.
-                </p>
-              </article>
-              <article class="flex flex-col gap-4 rounded-3xl bg-white p-8 shadow-card">
-                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-                  </svg>
-                </div>
-                <h3 class="font-display text-xl font-semibold text-neutral-900">Boosted revenue</h3>
-                <p class="text-sm text-neutral-500">
-                  Local businesses recover revenue on cancellations while attracting repeat customers with surprise savings.
-                </p>
-              </article>
-            </div>
+        <article class="flex h-full flex-col gap-4 rounded-2xl border border-border bg-surface p-6 shadow-sm">
+          <h2 class="text-xl font-semibold">Highlight Card</h2>
+          <p class="text-subtext">
+            Use <code class="rounded bg-surface/70 px-1 py-0.5">text-highlight</code> and <code class="rounded bg-surface/70 px-1 py-0.5">bg-support</code> to accent key metrics.
+          </p>
+          <div class="rounded-xl bg-support/20 p-4 text-highlight">
+            128% growth vs last month
           </div>
-        </section>
+          <div class="rounded-xl bg-supportAccent/20 p-4 text-supportAccent">
+            8.7 NPS improvement this quarter
+          </div>
+        </article>
 
-        <section id="deals" class="bg-gradient-to-r from-primary via-secondary to-warning py-20 text-white">
-          <div class="mx-auto flex max-w-7xl flex-col gap-10 px-6 lg:flex-row lg:items-center lg:justify-between lg:px-10">
-            <div class="space-y-5">
-              <span class="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-sm font-semibold">
-                Available on iOS &amp; Android
-              </span>
-              <h2 class="font-display text-4xl font-semibold leading-tight">Never Miss a Deal Again</h2>
-              <p class="max-w-xl text-lg text-white/80">
-                Join thousands of savvy locals saving big on last-minute appointments. Sign up now and unlock exclusive access to limited-time offers in your city.
-              </p>
-              <div class="flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#get-started"
-                  class="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-primary shadow-card transition hover:bg-neutral-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  <span>Get Started Free</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                      fill-rule="evenodd"
-                      d="M10.293 3.293a1 1 0 011.414 0l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414-1.414L13.586 10H4a1 1 0 110-2h9.586l-3.293-3.293a1 1 0 010-1.414z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </a>
-                <a
-                  href="#business"
-                  class="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  List Your Business
-                </a>
-              </div>
-              <p class="text-sm text-white/70">No credit card required • Free to browse • Cancel anytime</p>
-            </div>
-            <div class="relative isolate mt-6 flex-1 overflow-hidden rounded-[2.5rem] bg-white/10 p-1 shadow-elevated">
-              <div class="rounded-[2.1rem] bg-white p-8 text-neutral-900">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <h3 class="font-display text-2xl font-semibold text-neutral-900">Swift Slots for Businesses</h3>
-                  <span class="inline-flex items-center gap-2 rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">
-                    <span class="h-2 w-2 rounded-full bg-success"></span>
-                    Filling openings faster
-                  </span>
-                </div>
-                <p class="mt-4 text-sm text-neutral-500">
-                  Connect your scheduling system, push cancellations in real time, and reach high-intent locals ready to book right now.
-                </p>
-                <ul class="mt-6 space-y-3 text-sm text-neutral-600">
-                  <li class="flex items-start gap-3">
-                    <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                      </svg>
-                    </span>
-                    Intelligent yield management suggestions that keep your calendar full.
-                  </li>
-                  <li class="flex items-start gap-3">
-                    <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-                      </svg>
-                    </span>
-                    Highlight repeat offers, loyalty perks, and upsells for premium slots.
-                  </li>
-                  <li class="flex items-start gap-3">
-                    <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-4.216a2 2 0 00-1.896-1.367H15V7a3 3 0 00-6 0v4.417H6.301a2 2 0 00-1.897 1.367L3 17h5m7 0v1a3 3 0 11-6 0v-1m6 0H8" />
-                      </svg>
-                    </span>
-                    Automated reminders and reviews to keep customers coming back.
-                  </li>
-                </ul>
-                <a
-                  id="business"
-                  href="#get-started"
-                  class="mt-8 inline-flex items-center gap-2 rounded-full bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
-                >
-                  Book a demo
-                </a>
-              </div>
-            </div>
+        <article class="flex h-full flex-col gap-4 rounded-2xl border border-border bg-surface p-6 shadow-sm">
+          <h2 class="text-xl font-semibold">Add palettes fast</h2>
+          <p class="text-subtext">
+            Duplicate a <code class="rounded bg-surface/70 px-1 py-0.5">[data-theme]</code> block in <code class="rounded bg-surface/70 px-1 py-0.5">styles/globals.css</code>, adjust the RGB tuples, and every semantic class adopts the new look instantly.
+          </p>
+          <div class="mt-auto flex gap-3">
+            <span class="h-10 w-10 rounded-full bg-cta" aria-hidden="true"></span>
+            <span class="h-10 w-10 rounded-full bg-highlight" aria-hidden="true"></span>
+            <span class="h-10 w-10 rounded-full bg-support" aria-hidden="true"></span>
+            <span class="h-10 w-10 rounded-full bg-supportAccent" aria-hidden="true"></span>
           </div>
-        </section>
+        </article>
+      </section>
 
-        <section id="get-started" class="bg-background py-16">
-          <div class="mx-auto max-w-6xl rounded-3xl bg-white px-8 py-12 shadow-elevated">
-            <div class="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-              <div class="space-y-5">
-                <h2 class="font-display text-3xl font-semibold text-neutral-900 sm:text-4xl">Ready to see Swift Slots in action?</h2>
-                <p class="text-neutral-600">
-                  Download the app, enable notifications, and start following your favorite categories. We'll notify you the moment a slot opens up nearby.
-                </p>
-                <div class="flex flex-col gap-3 sm:flex-row">
-                  <a
-                    href="#"
-                    class="inline-flex items-center justify-center gap-3 rounded-2xl border border-neutral-200 bg-neutral-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-neutral-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M17.53 7.47a2.89 2.89 0 00-.21 3.63 3.21 3.21 0 00.24 3.61 3.31 3.31 0 00-3.62.49L9.1 12.9a3.3 3.3 0 000-1.8l4.88-2.3a3.33 3.33 0 003.55.67 2.9 2.9 0 00-.21-3.64zM13.5 3a9.5 9.5 0 109.5 9.5A9.5 9.5 0 0013.5 3zm0 17a7.5 7.5 0 117.5-7.5 7.5 7.5 0 01-7.5 7.5z" />
-                    </svg>
-                    <span>Watch demo</span>
-                  </a>
-                  <a
-                    href="#"
-                    class="inline-flex items-center justify-center gap-2 rounded-2xl border border-neutral-200 px-6 py-3 text-sm font-semibold text-neutral-700 transition hover:border-primary hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-                  >
-                    Explore product tours
-                  </a>
-                </div>
-              </div>
-              <div class="space-y-6 rounded-3xl bg-neutral-50 p-8">
-                <h3 class="font-display text-xl font-semibold text-neutral-900">What members love</h3>
-                <ul class="space-y-4 text-sm text-neutral-600">
-                  <li class="flex items-start gap-3">
-                    <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                      </svg>
-                    </span>
-                    Surprise flash drops with massive savings.
-                  </li>
-                  <li class="flex items-start gap-3">
-                    <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
-                      </svg>
-                    </span>
-                    Seamless rebooking when you find a favorite studio.
-                  </li>
-                  <li class="flex items-start gap-3">
-                    <span class="mt-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-4.216a2 2 0 00-1.896-1.367H15V7a3 3 0 00-6 0v4.417H6.301a2 2 0 00-1.897 1.367L3 17h5m7 0v1a3 3 0 11-6 0v-1m6 0H8" />
-                      </svg>
-                    </span>
-                    Friendly support team ready to help at any time.
-                  </li>
-                </ul>
-                <div class="flex items-center gap-3">
-                  <div class="flex -space-x-3">
-                    <img class="h-10 w-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=80&h=80&q=80" alt="Smiling customer" />
-                    <img class="h-10 w-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=facearea&w=80&h=80&q=80" alt="Happy customer" />
-                    <img class="h-10 w-10 rounded-full border-2 border-white object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=facearea&w=80&h=80&q=80" alt="Happy customer" />
-                  </div>
-                  <div class="text-sm text-neutral-600">
-                    <p class="font-semibold text-neutral-900">Trusted by 50K+ members</p>
-                    <p>Average rating 4.8/5 across 3,200 reviews</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer class="border-t border-neutral-200 bg-white/80">
-        <div class="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8 text-sm text-neutral-500 sm:flex-row sm:items-center sm:justify-between lg:px-10">
-          <p>&copy; <span id="year"></span> Swift Slots. All rights reserved.</p>
-          <div class="flex flex-wrap items-center gap-4 text-neutral-500">
-            <a href="#" class="transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Privacy</a>
-            <a href="#" class="transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Terms</a>
-            <a href="#" class="transition hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Support</a>
-          </div>
-        </div>
+      <footer class="text-center text-sm text-subtext">
+        Add new palettes by defining additional <code class="rounded bg-surface/70 px-1 py-0.5">[data-theme]</code> selectors. No Tailwind config changes are required—only fresh RGB tuples.
       </footer>
-    </div>
+    </main>
+
     <script>
-      document.getElementById('year').textContent = new Date().getFullYear();
+      const themes = [
+        {
+          name: 'default',
+          swatchClass: 'bg-cta',
+        },
+        {
+          name: 'dark',
+          swatchClass: 'bg-highlight',
+        },
+        {
+          name: 'vibrant',
+          swatchClass: 'bg-support',
+        },
+      ];
+
+      const root = document.documentElement;
+      const themeName = document.getElementById('theme-name');
+      const pillsHost = document.getElementById('theme-pills');
+      const pillTemplate = document.getElementById('theme-pill-template');
+      const cycleThemeButton = document.getElementById('cycle-theme');
+
+      let currentIndex = 0;
+
+      function applyTheme(index) {
+        const theme = themes[index];
+        currentIndex = index;
+        root.setAttribute('data-theme', theme.name);
+        themeName.textContent = theme.name;
+        updatePills();
+      }
+
+      function updatePills() {
+        pillsHost.innerHTML = '';
+        themes.forEach((theme, index) => {
+          const pill = pillTemplate.content.firstElementChild.cloneNode(true);
+          pill.querySelector('[data-theme-label]').textContent = theme.name;
+          const swatch = pill.querySelector('span');
+          swatch.classList.add(theme.swatchClass);
+          if (index === currentIndex) {
+            pill.classList.add('border-cta', 'shadow-md', 'text-text');
+          } else {
+            pill.classList.add('text-subtext/80');
+          }
+          pill.addEventListener('click', () => applyTheme(index));
+          pillsHost.appendChild(pill);
+        });
+      }
+
+      cycleThemeButton.addEventListener('click', () => {
+        applyTheme((currentIndex + 1) % themes.length);
+      });
+
+      applyTheme(currentIndex);
     </script>
   </body>
 </html>
