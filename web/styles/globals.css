@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Define semantic color tokens using RGB tuples so Tailwind can build
+  utilities with alpha-channel support. Update the RGB values per theme
+  to introduce new palettes with minimal config changes.
+*/
+@layer base {
+  :root,
+  [data-theme='default'] {
+    color-scheme: light;
+    --color-bg: 245 247 250;       /* #F5F7FA */
+    --color-surface: 255 255 255;  /* elevated backgrounds */
+    --color-text: 11 16 32;        /* #0B1020 */
+    --color-subtext: 73 80 99;     /* muted neutral */
+    --color-border: 182 191 209;   /* soft outline */
+    --color-cta: 0 191 166;        /* #00BFA6 */
+    --color-highlight: 76 201 240; /* #4CC9F0 */
+    --color-support: 255 190 11;   /* #FFBE0B */
+    --color-support-accent: 241 91 181; /* #F15BB5 */
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+    --color-bg: 11 16 32;          /* #0B1020 */
+    --color-surface: 27 36 59;     /* slightly lighter surface */
+    --color-text: 245 247 250;     /* #F5F7FA */
+    --color-subtext: 196 203 218;  /* soft neutral */
+    --color-border: 76 91 120;     /* low-contrast border */
+    --color-cta: 0 191 166;        /* brand colors remain */
+    --color-highlight: 76 201 240;
+    --color-support: 255 190 11;
+    --color-support-accent: 241 91 181;
+  }
+
+  [data-theme='vibrant'] {
+    color-scheme: light;
+    --color-bg: 245 247 250;
+    --color-surface: 255 255 255;
+    --color-text: 11 16 32;
+    --color-subtext: 65 70 90;
+    --color-border: 170 188 215;
+    --color-cta: 0 210 182;        /* brighter teal */
+    --color-highlight: 56 190 255; /* brighter cyan */
+    --color-support: 255 200 40;   /* punchier gold */
+    --color-support-accent: 255 105 200; /* punchier pink */
+  }
+}
+
+body {
+  @apply bg-bg text-text transition-colors duration-300 ease-in-out;
+}
+
+a {
+  @apply text-highlight hover:text-cta;
+}
+
+button {
+  @apply px-4 py-2 rounded-md font-medium text-bg bg-cta hover:bg-highlight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-highlight;
+}
