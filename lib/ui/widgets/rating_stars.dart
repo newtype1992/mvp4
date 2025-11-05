@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/colors.dart';
+
 class RatingStars extends StatelessWidget {
   const RatingStars({super.key, required this.rating, required this.reviewCount});
 
@@ -17,7 +19,7 @@ class RatingStars extends StatelessWidget {
             : half
                 ? Icons.star_half
                 : Icons.star_border,
-        color: Colors.amber,
+        color: AppColors.accent,
         size: 18,
       );
     });
